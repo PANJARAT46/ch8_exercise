@@ -8,11 +8,9 @@ class LoginFormScreen extends StatefulWidget {
 }
 
 class _LoginFormScreenState extends State<LoginFormScreen> {
-  // ตัวแปร State และเมธอดต่างๆ จะอยู่ที่นี่
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); //แก้buidของstate
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-
   String _savedEmail = '';
   String _savedPassword = '';
 
@@ -32,25 +30,24 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // โครงสร้าง UI จะอยู่ที่นี่
     return Scaffold(
-      // โครงสร้างพื้นฐาน
       appBar: AppBar(title: const Text('ฟอร์มล็อกอิน')),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
-          key: _formKey,
+          // เพิ่มวิดเจ็ต Form
+          key: _formKey, // กำหนด key
           child: Column(
             children: [
-              Text('กรุณาป้อนข้อมูลเข้าระบบ'),
-              const SizedBox(height: 20),
+              Text('กรุณาป้อนข้อมูลเข้าระบบ:'),
+              const SizedBox(height: 20), // ตัวเว้นวรรค
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: 'อีเมล',
                   hintText: 'you@example.com',
-                  prefixIcon: Icon(Icons.email),
+                  prefixIcon: const Icon(Icons.email),
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
@@ -58,7 +55,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     return 'กรุณากรอกอีเมล';
                   }
                   if (!value.contains('@') || !value.contains('.')) {
-                    return 'กรุณากรอกให้ถูกต้อง';
+                    return 'กรุณากรอกอีเมลให้ถูฏต้อง';
                   }
                   return null;
                 },
@@ -68,13 +65,13 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   }
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(
                   labelText: 'รหัสผ่าน',
-                  hintText: 'กรอกรหัสผ่าน',
+                  hintText: 'ป้อนรหัสผ่านของคุณ',
                   prefixIcon: Icon(Icons.lock),
                   border: OutlineInputBorder(),
                 ),
@@ -93,27 +90,24 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   }
                 },
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 15),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState != null &&
                       _formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'สำเร็จ! Email : $_savedEmail, password : $_savedPassword',
-                        ),
+                      const SnackBar(
+                        content: Text('ฟอร์มถูกต้อง! กำลังประมวลผลข้อมูล...'),
                       ),
                     );
-                    print('email : $_savedEmail');
-                    print('password : $_savedPassword');
+                    print('_saveEmail: $_savedEmail');
+                    print('_savedPassword: $_savedPassword');
                   } else {
                     print('ฟอร์มไม่ถูกต้อง');
                   }
                 },
-                child: const Text('เข้าสู่ระบบ'),
+
+                child: const Text('ล็อกอิน'),
               ),
             ],
           ),
